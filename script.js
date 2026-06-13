@@ -8,7 +8,7 @@ window.addEventListener('resize', resizePCanvas);
 function createParticle() {
   return { x: Math.random() * pCanvas.width, y: Math.random() * pCanvas.height - 50, size: Math.random() * 5 + 2, speedX: Math.random() * 1 - .5, speedY: Math.random() * 0.8 + 0.3, opacity: Math.random() * 0.5 + 0.2, color: `hsl(${340 + Math.random() * 40},${60 + Math.random() * 20}%,${75 + Math.random() * 15}%)` }
 }
-for (let i = 0; i < 60; i++)particles.push(createParticle());
+for (let i = 0; i < 30; i++)particles.push(createParticle());
 function animParticles() {
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
   particles.forEach(p => {
