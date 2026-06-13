@@ -51,43 +51,49 @@ const bodyGeo = new THREE.BoxGeometry(2.8, 1.8, .05, 1, 1, 1);
 const body = new THREE.Mesh(bodyGeo, envMat);
 envGroup.add(body);
 
-// Bottom flap (trapezoid via shape)
+// Envelope drop shadow (behind)
+// const shadowGeo = new THREE.PlaneGeometry(2.8, 1.8);
+// const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15, side: THREE.DoubleSide });
+// const shadow = new THREE.Mesh(shadowGeo, shadowMat);
+// shadow.position.set(0.08, -0.08, -0.06);
+// shadow.userData.noOutline = true;
+// envGroup.add(shadow);
+
+// Bottom flap (tucked behind)
 const bShape = new THREE.Shape();
 bShape.moveTo(-1.4, -0.9);
 bShape.lineTo(1.4, -0.9);
-bShape.lineTo(0.6, 0);
-bShape.lineTo(-0.6, 0)
+bShape.lineTo(0, 0.1);
 bShape.closePath();
 const bGeo = new THREE.ShapeGeometry(bShape);
-const bFlap = new THREE.Mesh(bGeo, liningMat); bFlap.position.z = .026; envGroup.add(bFlap);
+const bFlap = new THREE.Mesh(bGeo, liningMat); bFlap.position.z = .03; envGroup.add(bFlap);
 
-// Left flap
+// Left flap (in front)
 const lShape = new THREE.Shape();
 lShape.moveTo(-1.4, -0.9);
 lShape.lineTo(-1.4, .9);
-lShape.lineTo(-0.05, 0);
-lShape.lineTo(-0.6, 0);
+lShape.lineTo(0, 0.1);
 lShape.closePath();
-const lFlap = new THREE.Mesh(new THREE.ShapeGeometry(lShape), liningMat); lFlap.position.z = .027; envGroup.add(lFlap);
+const lFlap = new THREE.Mesh(new THREE.ShapeGeometry(lShape), liningMat); lFlap.position.z = .03; envGroup.add(lFlap);
 
-// Right flap
+// Right flap (in front)
 const rShape = new THREE.Shape();
 rShape.moveTo(1.4, -0.9);
 rShape.lineTo(1.4, .9);
-rShape.lineTo(0.05, 0);
-rShape.lineTo(0.6, 0);
+rShape.lineTo(0, 0.1);
 rShape.closePath();
-const rFlap = new THREE.Mesh(new THREE.ShapeGeometry(rShape), liningMat); rFlap.position.z = .028; envGroup.add(rFlap);
+const rFlap = new THREE.Mesh(new THREE.ShapeGeometry(rShape), liningMat); rFlap.position.z = .03; envGroup.add(rFlap);
 
 // Top flap
 const tShape = new THREE.Shape();
 tShape.moveTo(-1.4, .9);
 tShape.lineTo(1.4, .9);
-tShape.lineTo(0, 0.0);
+tShape.lineTo(0, 0);
 tShape.closePath();
 const topFlapGeo = new THREE.ShapeGeometry(tShape);
 const topFlapPivot = new THREE.Group();
-topFlapPivot.position.set(0, .9, .029);
+topFlapPivot.position.set(0, .9, .03);
+topFlapPivot.rotation.x = -0.01;
 envGroup.add(topFlapPivot);
 const topFlapMesh = new THREE.Mesh(topFlapGeo, flapMat);
 topFlapMesh.position.set(0, -.9, 0);
@@ -95,15 +101,19 @@ topFlapPivot.add(topFlapMesh);
 
 // Wax seal
 const sealGeo = new THREE.CircleGeometry(.22, 32);
-const seal = new THREE.Mesh(sealGeo, sealMat); seal.position.set(0, 0.05, .03); envGroup.add(seal);
+const seal = new THREE.Mesh(sealGeo, sealMat); seal.position.set(0, 0.05, .08); envGroup.add(seal);
 const innerSeal = new THREE.CircleGeometry(.16, 32);
 const iSeal = new THREE.Mesh(innerSeal, new THREE.MeshStandardMaterial({ color: 0xb8862a, roughness: .15, metalness: .7 }));
-iSeal.position.set(0, .05, .032); envGroup.add(iSeal);
+iSeal.position.set(0, .05, .085); envGroup.add(iSeal);
 
-// Edge lines (border)
-const edgeGeo = new THREE.EdgesGeometry(bodyGeo);
-const edgeMat = new THREE.LineBasicMaterial({ color: 0xd4a47a, transparent: true, opacity: .4 });
-const edges = new THREE.LineSegments(edgeGeo, edgeMat); envGroup.add(edges);
+// Edge lines (black outlines)
+const edgeMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.2, linewidth: 1 });
+envGroup.traverse((child) => {
+  if (child.isMesh && !child.userData.noOutline) {
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry), edgeMat);
+    child.add(edges);
+  }
+});
 
 // Mouse interaction
 let isDragging = false, lastMouse = { x: 0, y: 0 }, targetRot = { x: 0, y: 0 }, currentRot = { x: 0, y: 0 };
@@ -167,8 +177,8 @@ function animate() {
     const snapDone = Math.abs(currentRot.x) < 0.01 && Math.abs(currentRot.y) < 0.01;
     if (snapDone) {
       openProgress = Math.min(openProgress + .018, 1);
-      flapAngle = openProgress * Math.PI * .95;
-      topFlapPivot.rotation.x = -flapAngle;
+      flapAngle = lerpAngle(0.15, -Math.PI * 0.95, openProgress);
+      topFlapPivot.rotation.x = flapAngle;
       // Scale up and fly away
       if (openProgress > 0.8) {
         const t = (openProgress - .8) / .2;
