@@ -51,14 +51,6 @@ const bodyGeo = new THREE.BoxGeometry(2.8, 1.8, .05, 1, 1, 1);
 const body = new THREE.Mesh(bodyGeo, envMat);
 envGroup.add(body);
 
-// Envelope drop shadow (behind)
-// const shadowGeo = new THREE.PlaneGeometry(2.8, 1.8);
-// const shadowMat = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.15, side: THREE.DoubleSide });
-// const shadow = new THREE.Mesh(shadowGeo, shadowMat);
-// shadow.position.set(0.08, -0.08, -0.06);
-// shadow.userData.noOutline = true;
-// envGroup.add(shadow);
-
 // Bottom flap (tucked behind)
 const bShape = new THREE.Shape();
 bShape.moveTo(-1.4, -0.9);
@@ -228,25 +220,25 @@ function setupScrollReveal() {
   }, 100);
 }
 
-// ===== ATTENDANCE SELECTION =====
-let attendYes = true;
-function selectAttend(val) {
-  attendYes = val === 'yes';
-  document.getElementById('att-yes').classList.toggle('selected', attendYes);
-  document.getElementById('att-no').classList.toggle('selected', !attendYes);
-}
+// ===== COUNTDOWN TIMER =====
+function updateCountdown() {
+  const countdownEl = document.getElementById('countdown-timer');
+  if (!countdownEl) return;
+  const weddingDate = new Date('August 03, 2026 17:00:00').getTime();
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
 
-// ===== RSVP SUBMIT =====
-function submitRSVP() {
-  const name = document.getElementById('guest-name').value.trim();
-  const email = document.getElementById('guest-email').value.trim();
-  if (!name) { document.getElementById('guest-name').focus(); document.getElementById('guest-name').style.borderBottomColor = '#c86060'; return; }
-  document.getElementById('rsvp-form-inner').style.display = 'none';
-  const success = document.getElementById('form-success');
-  success.classList.add('show');
-  if (attendYes) {
-    document.getElementById('success-message').textContent = `We're so happy to celebrate with you, ${name}! See you on the 14th.`;
-  } else {
-    document.getElementById('success-message').textContent = `We'll miss you, ${name}. Thank you for letting us know.`;
+  if (distance < 0) {
+    countdownEl.innerHTML = "Today is the Day!";
+    return;
   }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdownEl.innerHTML = `${days} Days · ${hours} Hours · ${minutes} Mins · ${seconds} Secs`;
 }
+setInterval(updateCountdown, 1000);
+updateCountdown();

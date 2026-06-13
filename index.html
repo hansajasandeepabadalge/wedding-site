@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gimhani & Vimal</title>
+  <title>Gimhani & Kimal</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Raleway:wght@200;300;400&display=swap"
     rel="stylesheet">
@@ -108,8 +108,9 @@
           <div class="hero-divider-diamond"></div>
           <div class="hero-divider-line r"></div>
         </div>
-        <div class="hero-date">Saturday · 14 February 2026</div>
-        <div class="hero-venue">Cinnamon Grand · Colombo, Sri Lanka</div>
+        <div class="hero-date">Monday · 03 August 2026</div>
+        <div class="hero-venue">Empire Ballroom Mount Lavinia Hotel</div>
+        <div id="countdown-timer" class="hero-countdown"></div>
         <button class="scroll-btn" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP
           Now</button>
       </div>
@@ -130,8 +131,8 @@
               <circle cx="22" cy="28" r="3" fill="#e8b0a0" opacity=".7" />
             </svg>
             <div class="detail-card-title">Date</div>
-            <div class="detail-main">14 February, 2026</div>
-            <div class="detail-sub">Valentine's Day</div>
+            <div class="detail-main">03 August, 2026</div>
+            <div class="detail-sub">Summer Wedding</div>
           </div>
           <div class="detail-card">
             <svg class="detail-icon" viewBox="0 0 44 44" fill="none">
@@ -151,19 +152,10 @@
               <circle cx="22" cy="16" r="3" fill="#e8b0a0" opacity=".8" />
             </svg>
             <div class="detail-card-title">Venue</div>
-            <div class="detail-main">Cinnamon Grand</div>
-            <div class="detail-sub">Colombo, Sri Lanka</div>
+            <div class="detail-main">Empire Ballroom</div>
+            <div class="detail-sub">Mount Lavinia Hotel</div>
           </div>
-          <div class="detail-card">
-            <svg class="detail-icon" viewBox="0 0 44 44" fill="none">
-              <path d="M10 14 L22 8 L34 14 L34 36 L10 36 Z" stroke="#c8a07a" stroke-width="1" fill="none" />
-              <path d="M16 36 L16 26 L22 22 L28 26 L28 36" stroke="#c8a07a" stroke-width="1" fill="none" />
-              <line x1="10" y1="14" x2="34" y2="14" stroke="#e8b0a0" stroke-width=".8" opacity=".5" />
-            </svg>
-            <div class="detail-card-title">Dress Code</div>
-            <div class="detail-main">Formal Elegance</div>
-            <div class="detail-sub">Pastels & earth tones preferred</div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -193,65 +185,18 @@
         <div class="section-title reveal">RSVP</div>
         <p class="reveal"
           style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:#aa7a6a;text-align:center;margin-bottom:.5rem">
-          Please respond by 31 January 2026</p>
+          Please respond by 10 July 2026</p>
 
-        <div class="rsvp-form reveal">
-          <div id="rsvp-form-inner">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Your Full Name</label>
-                <input type="text" id="guest-name" placeholder="Enter your name">
-              </div>
-              <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="guest-email" placeholder="your@email.com">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom:1.5rem">
-              <label>Will you be joining us?</label>
-              <div class="attendance-group">
-                <div class="attend-option selected" id="att-yes" onclick="selectAttend('yes')">Joyfully Accepts</div>
-                <div class="attend-option" id="att-no" onclick="selectAttend('no')">Regretfully Declines</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Number of Guests</label>
-                <select id="guest-count">
-                  <option value="1">1 person</option>
-                  <option value="2">2 people</option>
-                  <option value="3">3 people</option>
-                  <option value="4">4 people</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Meal Preference</label>
-                <select id="meal-pref">
-                  <option value="standard">Standard</option>
-                  <option value="vegetarian">Vegetarian</option>
-                  <option value="vegan">Vegan</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group full" style="margin-bottom:0">
-              <label>A Note for the Couple (optional)</label>
-              <textarea id="guest-note" placeholder="Share your wishes..."></textarea>
-            </div>
-            <button class="submit-btn" onclick="submitRSVP()">Confirm Your Attendance</button>
-          </div>
-          <div class="form-success" id="form-success">
-            <div class="success-icon">✿</div>
-            <div class="success-title">Thank you!</div>
-            <p class="success-msg" id="success-message">We can't wait to celebrate with you.</p>
-          </div>
+        <div class="rsvp-form reveal" style="padding: 0; overflow: hidden; background: transparent; border: none; box-shadow: none;">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe_placeholder_id_replace_me/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
         </div>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-      <div class="footer-names">Gimhani & Vimal</div>
-      <div class="footer-text" style="margin-bottom:1rem">14 · 02 · 2026 · Colombo</div>
+      <div class="footer-names">Gimhani & Kimal</div>
+      <div class="footer-text" style="margin-bottom:1rem">03 · 08 · 2026 · Mount Lavinia</div>
       <div class="footer-text" style="font-size:9px;opacity:.35;letter-spacing:2px">Made with love ♡</div>
     </footer>
 
