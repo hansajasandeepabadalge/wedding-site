@@ -169,12 +169,14 @@ body {
     mask-size: 100% 100%;
     mask-repeat: no-repeat;
     overflow: hidden;
+    background-color: #7a3d4a;
 }
 
 .name-glare-wrapper img {
     width: 100%;
     height: auto;
     display: block;
+    opacity: 0;
 }
 
 .name-glare-wrapper::after {
@@ -184,11 +186,12 @@ body {
     left: -150%;
     width: 60%;
     height: 100%;
-    background: linear-gradient(to right, rgba(184, 123, 51, 0) 0%, rgba(184, 123, 51, 0.7) 50%, rgba(184, 123, 51, 0) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
     transform: skewX(-20deg);
     animation: sweepGlare 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     pointer-events: none;
     z-index: 10;
+    mix-blend-mode: overlay;
 }
 
 @keyframes sweepGlare {
