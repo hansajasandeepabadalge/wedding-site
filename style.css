@@ -18,60 +18,163 @@ body {
 /* ENVELOPE SCREEN */
 #envelope-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     z-index: 1000;
     background: linear-gradient(135deg, #fce8e8 0%, #fdf0e8 40%, #f8e8f0 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: opacity 1.2s ease, transform 1.2s ease
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 #envelope-screen.exit {
     opacity: 0;
     pointer-events: none;
-    transform: scale(1.05)
+}
+
+/* Envelope wrapper — handles the slide-in from bottom */
+#envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(80px);
+    transition: opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1), transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#envelope-wrapper.entered {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* During open animation, wrapper slides down and fades */
+#envelope-wrapper.opening {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.4, 0, 0.6, 1), transform 0.9s cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 #canvas-container {
     width: 340px;
     height: 260px;
     cursor: pointer;
-    position: relative
+    position: relative;
 }
 
 #three-canvas {
     width: 100%;
     height: 100%;
-    display: block
+    display: block;
 }
 
 .envelope-hint {
     margin-top: 24px;
     font-family: 'Raleway', sans-serif;
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 600;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: #c8967a;
-    animation: pulse 2s ease-in-out infinite
+    color: #7a3d4a;
+    animation: pulse 2s ease-in-out infinite;
+    z-index: 10;
+    position: relative;
+    transition: opacity 0.5s ease;
+}
+
+.envelope-hint.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 @keyframes pulse {
-
-    0%,
-    100% {
-        opacity: .5
-    }
-
-    50% {
-        opacity: 1
-    }
+    0%, 100% { opacity: 0.5 }
+    50% { opacity: 1 }
 }
+
+/* ---- Invitation Card ---- */
+#invitation-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7) translateY(30px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.9s cubic-bezier(0.34, 1.2, 0.64, 1), transform 0.9s cubic-bezier(0.34, 1.2, 0.64, 1);
+    z-index: 10;
+    width: 320px;
+}
+
+#invitation-card.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+}
+
+.invitation-card-inner {
+    background: #fffaf7;
+    border: 1px solid rgba(200,160,122,0.35);
+    box-shadow: 0 30px 80px rgba(90, 40, 30, 0.18), 0 4px 20px rgba(90, 40, 30, 0.1);
+    padding: 3rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.invitation-card-inner::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(200,160,122,0.18);
+    pointer-events: none;
+}
+
+.invitation-card-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #c8967a;
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+}
+
+.invitation-card-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 48px;
+    color: #7a3d4a;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.invitation-card-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c8a07a, transparent);
+    margin: 0 auto 1rem;
+}
+
+.invitation-card-date {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 14px;
+    color: #8a5a4a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+}
+
+.invitation-card-date sup {
+    text-transform: lowercase;
+}
+
+.invitation-card-venue {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: #aa7a6a;
+    font-weight: 300;
+}
+
 
 #particles-bg {
     position: fixed;
