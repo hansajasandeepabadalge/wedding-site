@@ -270,41 +270,30 @@ body {
     font-weight: 300;
 }
 
-.scroll-btn {
-    display: inline-block;
-    padding: 10px 32px;
-    border: 1px solid #c8a07a;
-    color: #8a5a4a;
-    font-family: 'Raleway', sans-serif;
-    font-size: 9px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-decoration: none;
+.scroll-down-container {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    background: transparent;
-    transition: all .4s ease;
-    position: relative;
-    overflow: hidden
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    margin-top: 1rem;
 }
 
-.scroll-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(200, 160, 120, .15), transparent);
-    transition: .6s
+.scroll-down-container:hover {
+    opacity: 1;
 }
 
-.scroll-btn:hover::before {
-    left: 100%
+.scroll-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: floatArrow 3s ease-in-out infinite;
 }
 
-.scroll-btn:hover {
-    background: rgba(200, 160, 120, .12);
-    letter-spacing: 7px
+@keyframes floatArrow {
+    0%, 100% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
 }
 
 /* DETAILS SECTION */

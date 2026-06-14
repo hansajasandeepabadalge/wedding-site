@@ -43,12 +43,18 @@
           <div class="hero-divider-diamond"></div>
           <div class="hero-divider-line r"></div>
         </div>
-        <div class="hero-date">Monday · 03 August 2026</div>
+        <div class="hero-date">Monday<br>03 August 2026</div>
         <div class="hero-venue">Empire Ballroom · Mount Lavinia Hotel</div>
         <div id="countdown-timer" class="hero-countdown"></div>
 
-        <button class="scroll-btn" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP
-          Now</button>
+        <div class="scroll-down-container" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+          <div class="scroll-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a07a" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
       </div>
     </section>
 
