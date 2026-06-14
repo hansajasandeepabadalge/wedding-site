@@ -243,13 +243,18 @@ body {
 }
 
 .hero-date {
-    font-family: 'Cinzel', serif;
+    font-family: 'Bodoni Moda', serif;
     font-size: clamp(12px, 2.5vw, 16px);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: 4px;
     color: #8a5a4a;
     text-transform: uppercase;
     margin-bottom: .4rem
+}
+
+.hero-date sup,
+.detail-main sup {
+    text-transform: lowercase;
 }
 
 .hero-venue {
@@ -359,20 +364,22 @@ body {
 }
 
 .detail-main {
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    font-weight: 500;
+    font-family: 'Bodoni Moda', serif;
+    font-size: 15px;
+    font-weight: 400;
     color: #5a3a2a;
+    text-transform: uppercase;
     margin-bottom: .4rem
 }
 
 .detail-sub {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 15px;
+    font-size: 13px;
     font-style: italic;
     color: #aa7a6a;
     font-weight: 300
 }
+
 /* Dark Theme Section Overrides */
 .theme-dark {
     background: #4a1c27;
@@ -473,9 +480,9 @@ body {
 }
 
 .timeline-time {
-    font-family: 'Cinzel', serif;
+    font-family: 'Bodoni Moda', serif;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: #c8a07a;
     margin-bottom: 5px;
     letter-spacing: 2px;
@@ -497,10 +504,18 @@ body {
 }
 
 @media (max-width: 768px) {
+
+    .hero-floral-tl,
+    .hero-floral-tr,
+    .hero-floral-bl,
+    .hero-floral-br {
+        width: 400px;
+    }
+
     .timeline::before {
         left: 20px;
     }
-    
+
     .timeline-item.left,
     .timeline-item.right {
         width: 100%;
@@ -509,7 +524,7 @@ body {
         padding-right: 20px;
         left: 0 !important;
     }
-    
+
     .timeline-item .timeline-dot {
         left: 13px !important;
         right: auto !important;
@@ -555,7 +570,7 @@ body {
 
 .rsvp-form {
     background: white;
-    border: 1px solid #e8d8d0;
+    border: none;
     padding: 3rem 2.5rem;
     margin-top: 2.5rem;
     box-shadow: 0 20px 60px rgba(120, 60, 60, .06)
