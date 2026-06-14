@@ -149,10 +149,10 @@ let openProgress = 0;
 function openEnvelope() {
   const docEl = document.documentElement;
   const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.msRequestFullscreen;
-  
-  if (requestFS && !document.fullscreenElement && !document.webkitFullscreenElement) {
-    requestFS.call(docEl).catch(err => console.log("Fullscreen not supported:", err));
-  }
+
+  // if (requestFS && !document.fullscreenElement && !document.webkitFullscreenElement) {
+  //   requestFS.call(docEl).catch(err => console.log("Fullscreen not supported:", err));
+  // }
   opened = true; animating = true;
   // First snap back to default orientation
   targetRot.x = 0; targetRot.y = 0;
@@ -205,6 +205,7 @@ function transitionToSite() {
     envScreen.style.display = 'none';
     document.getElementById('main-site').classList.add('visible');
     setupScrollReveal();
+    setTimeout(adjustTimelineLine, 50);
   }, 1200);
 }
 
@@ -226,25 +227,27 @@ function setupScrollReveal() {
   }, 100);
 }
 
-// ===== COUNTDOWN TIMER =====
-function updateCountdown() {
-  const countdownEl = document.getElementById('countdown-timer');
-  if (!countdownEl) return;
-  const weddingDate = new Date('August 03, 2026 17:00:00').getTime();
-  const now = new Date().getTime();
-  const distance = weddingDate - now;
 
-  if (distance < 0) {
-    countdownEl.innerHTML = "Today is the Day!";
-    return;
-  }
-
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  countdownEl.innerHTML = `${days} Days · ${hours} Hours · ${minutes} Mins · ${seconds} Secs`;
+// ===== TIMELINE LINE ADJUSTMENT =====
+function adjustTimelineLine() {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+  const dots = timeline.querySelectorAll('.timeline-dot');
+  if (dots.length < 2) return;
+  
+  const firstDot = dots[0];
+  const lastDot = dots[dots.length - 1];
+  
+  const timelineRect = timeline.getBoundingClientRect();
+  const firstDotRect = firstDot.getBoundingClientRect();
+  const lastDotRect = lastDot.getBoundingClientRect();
+  
+  const topOffset = firstDotRect.top - timelineRect.top + (firstDotRect.height / 2);
+  const bottomOffset = lastDotRect.top - timelineRect.top + (lastDotRect.height / 2);
+  const height = bottomOffset - topOffset;
+  
+  timeline.style.setProperty('--line-top', `${topOffset}px`);
+  timeline.style.setProperty('--line-height', `${height}px`);
 }
-setInterval(updateCountdown, 1000);
-updateCountdown();
+
+window.addEventListener('resize', adjustTimelineLine);
