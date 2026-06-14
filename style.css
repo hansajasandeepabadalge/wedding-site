@@ -249,7 +249,8 @@ body {
 
 .hero-content {
     position: relative;
-    z-index: 2
+    z-index: 2;
+    margin-top: 5rem;
 }
 
 .hero-save-the-date {

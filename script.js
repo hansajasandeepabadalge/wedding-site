@@ -212,15 +212,6 @@ function animate() {
 }
 animate();
 
-// ===== FULLSCREEN =====
-function requestFullscreen() {
-  const el = document.documentElement;
-  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
-  if (req && !document.fullscreenElement && !document.webkitFullscreenElement) {
-    req.call(el).catch(() => { }); // silently ignore if denied
-  }
-}
-
 // ===== ENTRANCE ANIMATION =====
 // Force top of page on every load (prevents scroll carry-over)
 window.scrollTo(0, 0);
@@ -233,16 +224,6 @@ window.addEventListener('load', () => {
     if (wrapper) wrapper.classList.add('entered');
   }, 300);
 });
-
-// Request fullscreen on first interaction (browsers require a user gesture)
-const envScreen = document.getElementById('envelope-screen');
-function onFirstInteraction() {
-  requestFullscreen();
-  envScreen.removeEventListener('click', onFirstInteraction);
-  envScreen.removeEventListener('touchstart', onFirstInteraction);
-}
-envScreen.addEventListener('click', onFirstInteraction);
-envScreen.addEventListener('touchstart', onFirstInteraction, { passive: true });
 
 // ===== TRANSITION TO SITE =====
 function transitionToSite() {
