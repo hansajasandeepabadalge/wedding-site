@@ -147,8 +147,11 @@ container.addEventListener('touchend', e => {
 
 let openProgress = 0;
 function openEnvelope() {
-  if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
-    document.documentElement.requestFullscreen().catch(err => console.log(err));
+  const docEl = document.documentElement;
+  const requestFS = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.msRequestFullscreen;
+  
+  if (requestFS && !document.fullscreenElement && !document.webkitFullscreenElement) {
+    requestFS.call(docEl).catch(err => console.log("Fullscreen not supported:", err));
   }
   opened = true; animating = true;
   // First snap back to default orientation
