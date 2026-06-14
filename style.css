@@ -101,7 +101,9 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    background: linear-gradient(160deg, #fce8e8 0%, #fdf4ee 50%, #f5e8f5 100%);
+    background: url('assets/faded.png') center/cover no-repeat,
+        url('assets/smokes.png') center/cover no-repeat,
+        linear-gradient(160deg, #fce8e8 0%, #fdf4ee 50%, #f5e8f5 100%);
     overflow: hidden;
     text-align: center;
     padding: 2rem
@@ -292,8 +294,15 @@ body {
 }
 
 @keyframes floatArrow {
-    0%, 100% { transform: translateY(-5px); }
-    50% { transform: translateY(5px); }
+
+    0%,
+    100% {
+        transform: translateY(-5px);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
 }
 
 /* DETAILS SECTION */

@@ -147,6 +147,9 @@ container.addEventListener('touchend', e => {
 
 let openProgress = 0;
 function openEnvelope() {
+  if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+    document.documentElement.requestFullscreen().catch(err => console.log(err));
+  }
   opened = true; animating = true;
   // First snap back to default orientation
   targetRot.x = 0; targetRot.y = 0;
