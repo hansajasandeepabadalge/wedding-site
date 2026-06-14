@@ -41,10 +41,10 @@ const rimLight = new THREE.DirectionalLight(0xf8e0f0, 0.4); rimLight.position.se
 const envGroup = new THREE.Group(); scene.add(envGroup);
 
 // Materials
-const envMat = new THREE.MeshStandardMaterial({ color: 0x8c283a, roughness: .4, metalness: .05, side: THREE.DoubleSide });
-const flapMat = new THREE.MeshStandardMaterial({ color: 0x9c3547, roughness: .35, metalness: .08, side: THREE.DoubleSide });
-const liningMat = new THREE.MeshStandardMaterial({ color: 0x802030, roughness: .5, metalness: 0, side: THREE.DoubleSide });
-const sealMat = new THREE.MeshStandardMaterial({ color: 0xd4a04a, roughness: .2, metalness: .6, side: THREE.DoubleSide, transparent: true });
+const envMat = new THREE.MeshStandardMaterial({ color: 0x7a3d4a, roughness: .4, metalness: .05, side: THREE.DoubleSide });
+const flapMat = new THREE.MeshStandardMaterial({ color: 0x6a2d3a, roughness: .35, metalness: .08, side: THREE.DoubleSide });
+const liningMat = new THREE.MeshStandardMaterial({ color: 0x4a1c27, roughness: .5, metalness: 0, side: THREE.DoubleSide });
+const sealMat = new THREE.MeshStandardMaterial({ color: 0xc8a07a, roughness: .2, metalness: .6, side: THREE.DoubleSide, transparent: true });
 
 // Envelope body
 const bodyGeo = new THREE.BoxGeometry(2.8, 1.8, .05, 1, 1, 1);
@@ -86,7 +86,7 @@ seal.position.set(0, 0.05, .08);
 seal.userData.noOutline = true;
 envGroup.add(seal);
 
-const iSeal = new THREE.Mesh(new THREE.CircleGeometry(.16, 32), new THREE.MeshStandardMaterial({ color: 0xb8862a, roughness: .15, metalness: .7, transparent: true }));
+const iSeal = new THREE.Mesh(new THREE.CircleGeometry(.16, 32), new THREE.MeshStandardMaterial({ color: 0xb08060, roughness: .15, metalness: .7, transparent: true }));
 iSeal.position.set(0, .05, .085);
 iSeal.userData.noOutline = true;
 envGroup.add(iSeal);
@@ -154,6 +154,13 @@ function openEnvelope() {
 function animate() {
   requestAnimationFrame(animate);
 
+  // Animate lighting in a horizontal arc (left and right around the front)
+  const time = Date.now() * 0.002;
+  const angle = Math.sin(time * 0.4) * 1.5; // Swings back and forth smoothly
+  dirLight.position.x = Math.sin(angle) * 6;
+  dirLight.position.y = 2; // Fixed height, no up/down motion
+  dirLight.position.z = Math.cos(angle) * 4; // Arcs around the Z axis
+
   // Smooth rotation
   currentRot.x = lerpAngle(currentRot.x, targetRot.x, .08);
   currentRot.y = lerpAngle(currentRot.y, targetRot.y, .08);
@@ -205,6 +212,15 @@ function animate() {
 }
 animate();
 
+// ===== FULLSCREEN =====
+function requestFullscreen() {
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+  if (req && !document.fullscreenElement && !document.webkitFullscreenElement) {
+    req.call(el).catch(() => { }); // silently ignore if denied
+  }
+}
+
 // ===== ENTRANCE ANIMATION =====
 // Force top of page on every load (prevents scroll carry-over)
 window.scrollTo(0, 0);
@@ -217,6 +233,16 @@ window.addEventListener('load', () => {
     if (wrapper) wrapper.classList.add('entered');
   }, 300);
 });
+
+// Request fullscreen on first interaction (browsers require a user gesture)
+const envScreen = document.getElementById('envelope-screen');
+function onFirstInteraction() {
+  requestFullscreen();
+  envScreen.removeEventListener('click', onFirstInteraction);
+  envScreen.removeEventListener('touchstart', onFirstInteraction);
+}
+envScreen.addEventListener('click', onFirstInteraction);
+envScreen.addEventListener('touchstart', onFirstInteraction, { passive: true });
 
 // ===== TRANSITION TO SITE =====
 function transitionToSite() {
