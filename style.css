@@ -172,6 +172,8 @@ body {
     mask-repeat: no-repeat;
     overflow: hidden;
     background-color: #7a3d4a;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .name-glare-wrapper img {
@@ -185,28 +187,29 @@ body {
     content: '';
     position: absolute;
     top: 0;
-    left: -150%;
+    left: 0;
     width: 60%;
     height: 100%;
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0) 100%);
-    transform: skewX(-20deg);
+    transform: translateX(-150%) skewX(-20deg);
     animation: sweepGlare 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     pointer-events: none;
     z-index: 10;
     mix-blend-mode: overlay;
+    will-change: transform;
 }
 
 @keyframes sweepGlare {
     0% {
-        left: -150%;
+        transform: translateX(-150%) skewX(-20deg);
     }
 
     50% {
-        left: 200%;
+        transform: translateX(200%) skewX(-20deg);
     }
 
     100% {
-        left: 200%;
+        transform: translateX(200%) skewX(-20deg);
     }
 }
 
