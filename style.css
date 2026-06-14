@@ -114,7 +114,7 @@ body {
 .hero-floral-bl,
 .hero-floral-br {
     position: absolute;
-    width: clamp(200px, 35vw, 450px);
+    width: clamp(240px, 40vw, 450px);
     height: auto;
     opacity: 0.85;
     pointer-events: none;
@@ -372,6 +372,146 @@ body {
     font-style: italic;
     color: #aa7a6a;
     font-weight: 300
+}
+/* Dark Theme Section Overrides */
+.theme-dark {
+    background: #4a1c27;
+    padding: 100px 0;
+}
+
+.theme-dark .section-label {
+    color: #c8a07a;
+}
+
+.theme-dark .section-title {
+    color: #fdf6f0;
+}
+
+.theme-dark .details-grid {
+    background: transparent;
+    gap: 15px;
+}
+
+.theme-dark .detail-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(200, 160, 122, 0.15);
+}
+
+.theme-dark .detail-main {
+    color: #ffffff;
+}
+
+.theme-dark .detail-sub {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .timeline-title {
+    color: #ffffff;
+}
+
+.theme-dark .timeline-desc {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .timeline-dot {
+    background: #4a1c27;
+}
+
+/* TIMELINE SECTION */
+.timeline {
+    position: relative;
+    margin: 40px auto 0;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #c8a07a;
+    transform: translateX(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.timeline-item.left {
+    left: 0;
+    text-align: right;
+    padding-right: 40px;
+}
+
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+    padding-left: 40px;
+}
+
+.timeline-dot {
+    position: absolute;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background: #fdf6f0;
+    border: 2px solid #c8a07a;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.timeline-item.left .timeline-dot {
+    right: -7px;
+}
+
+.timeline-item.right .timeline-dot {
+    left: -7px;
+}
+
+.timeline-time {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #c8a07a;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+}
+
+.timeline-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: #7a3d4a;
+    margin-bottom: 5px;
+}
+
+.timeline-desc {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    color: #8a6a5a;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        left: 20px;
+    }
+    
+    .timeline-item {
+        width: 100%;
+        text-align: left;
+        padding-left: 50px !important;
+        left: 0 !important;
+    }
+    
+    .timeline-item .timeline-dot {
+        left: 13px !important;
+        right: auto !important;
+    }
 }
 
 /* RSVP */
