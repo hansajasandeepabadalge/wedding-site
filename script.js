@@ -41,9 +41,9 @@ const rimLight = new THREE.DirectionalLight(0xf8e0f0, 0.4); rimLight.position.se
 const envGroup = new THREE.Group(); scene.add(envGroup);
 
 // Materials
-const envMat = new THREE.MeshStandardMaterial({ color: 0x7a3d4a, roughness: .4, metalness: .05, side: THREE.DoubleSide });
-const flapMat = new THREE.MeshStandardMaterial({ color: 0x6a2d3a, roughness: .35, metalness: .08, side: THREE.DoubleSide });
-const liningMat = new THREE.MeshStandardMaterial({ color: 0x4a1c27, roughness: .5, metalness: 0, side: THREE.DoubleSide });
+const envMat = new THREE.MeshStandardMaterial({ color: 0xc07c8c, roughness: .4, metalness: .05, side: THREE.DoubleSide });
+const flapMat = new THREE.MeshStandardMaterial({ color: 0xa65f70, roughness: .35, metalness: .08, side: THREE.DoubleSide });
+const liningMat = new THREE.MeshStandardMaterial({ color: 0x803e4d, roughness: .5, metalness: 0, side: THREE.DoubleSide });
 const sealMat = new THREE.MeshStandardMaterial({ color: 0xc8a07a, roughness: .2, metalness: .6, side: THREE.DoubleSide, transparent: true });
 
 // Envelope body
@@ -156,9 +156,9 @@ function animate() {
 
   // Animate lighting in a horizontal arc (left and right around the front)
   const time = Date.now() * 0.002;
-  const angle = Math.sin(time * 0.4) * 1.5; // Swings back and forth smoothly
+  const angle = Math.sin(time * 0.5) * 1; // Swings back and forth smoothly
   dirLight.position.x = Math.sin(angle) * 6;
-  dirLight.position.y = 2; // Fixed height, no up/down motion
+  dirLight.position.y = -3; // Fixed height, no up/down motion
   dirLight.position.z = Math.cos(angle) * 4; // Arcs around the Z axis
 
   // Smooth rotation
@@ -222,6 +222,7 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     const wrapper = document.getElementById('envelope-wrapper');
     if (wrapper) wrapper.classList.add('entered');
+    currentRot = { x: Math.PI * 0.5, y: Math.PI * 2 };
   }, 300);
 });
 
