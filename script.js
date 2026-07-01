@@ -8,7 +8,7 @@ window.addEventListener('resize', resizePCanvas);
 function createParticle() {
   return { x: Math.random() * pCanvas.width, y: Math.random() * pCanvas.height - 50, size: Math.random() * 5 + 2, speedX: Math.random() * 1 - .5, speedY: Math.random() * 0.8 + 0.3, opacity: Math.random() * 0.5 + 0.2, color: `hsl(${340 + Math.random() * 40},${60 + Math.random() * 20}%,${75 + Math.random() * 15}%)` }
 }
-for (let i = 0; i < 60; i++)particles.push(createParticle());
+for (let i = 0; i < 30; i++) particles.push(createParticle());
 function animParticles() {
   pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
   particles.forEach(p => {
@@ -41,90 +41,82 @@ const rimLight = new THREE.DirectionalLight(0xf8e0f0, 0.4); rimLight.position.se
 const envGroup = new THREE.Group(); scene.add(envGroup);
 
 // Materials
-const envMat = new THREE.MeshStandardMaterial({ color: 0x8c283a, roughness: .4, metalness: .05, side: THREE.DoubleSide });
-const flapMat = new THREE.MeshStandardMaterial({ color: 0x9c3547, roughness: .35, metalness: .08, side: THREE.DoubleSide });
-const liningMat = new THREE.MeshStandardMaterial({ color: 0x802030, roughness: .5, metalness: 0, side: THREE.DoubleSide });
-const sealMat = new THREE.MeshStandardMaterial({ color: 0xd4a04a, roughness: .2, metalness: .6, side: THREE.DoubleSide });
+const envMat = new THREE.MeshStandardMaterial({ color: 0xc07c8c, roughness: .4, metalness: .05, side: THREE.DoubleSide });
+const flapMat = new THREE.MeshStandardMaterial({ color: 0xa65f70, roughness: .35, metalness: .08, side: THREE.DoubleSide });
+const liningMat = new THREE.MeshStandardMaterial({ color: 0x803e4d, roughness: .5, metalness: 0, side: THREE.DoubleSide });
+const sealMat = new THREE.MeshStandardMaterial({ color: 0xc8a07a, roughness: .2, metalness: .6, side: THREE.DoubleSide, transparent: true });
 
 // Envelope body
 const bodyGeo = new THREE.BoxGeometry(2.8, 1.8, .05, 1, 1, 1);
 const body = new THREE.Mesh(bodyGeo, envMat);
 envGroup.add(body);
 
-// Bottom flap (trapezoid via shape)
+// Bottom flap
 const bShape = new THREE.Shape();
-bShape.moveTo(-1.4, -0.9);
-bShape.lineTo(1.4, -0.9);
-bShape.lineTo(0.6, 0);
-bShape.lineTo(-0.6, 0)
-bShape.closePath();
-const bGeo = new THREE.ShapeGeometry(bShape);
-const bFlap = new THREE.Mesh(bGeo, liningMat); bFlap.position.z = .026; envGroup.add(bFlap);
+bShape.moveTo(-1.4, -0.9); bShape.lineTo(1.4, -0.9); bShape.lineTo(0, 0.1); bShape.closePath();
+const bFlap = new THREE.Mesh(new THREE.ShapeGeometry(bShape), liningMat); bFlap.position.z = .03; envGroup.add(bFlap);
 
 // Left flap
 const lShape = new THREE.Shape();
-lShape.moveTo(-1.4, -0.9);
-lShape.lineTo(-1.4, .9);
-lShape.lineTo(-0.05, 0);
-lShape.lineTo(-0.6, 0);
-lShape.closePath();
-const lFlap = new THREE.Mesh(new THREE.ShapeGeometry(lShape), liningMat); lFlap.position.z = .027; envGroup.add(lFlap);
+lShape.moveTo(-1.4, -0.9); lShape.lineTo(-1.4, .9); lShape.lineTo(0, 0.1); lShape.closePath();
+const lFlap = new THREE.Mesh(new THREE.ShapeGeometry(lShape), liningMat); lFlap.position.z = .03; envGroup.add(lFlap);
 
 // Right flap
 const rShape = new THREE.Shape();
-rShape.moveTo(1.4, -0.9);
-rShape.lineTo(1.4, .9);
-rShape.lineTo(0.05, 0);
-rShape.lineTo(0.6, 0);
-rShape.closePath();
-const rFlap = new THREE.Mesh(new THREE.ShapeGeometry(rShape), liningMat); rFlap.position.z = .028; envGroup.add(rFlap);
+rShape.moveTo(1.4, -0.9); rShape.lineTo(1.4, .9); rShape.lineTo(0, 0.1); rShape.closePath();
+const rFlap = new THREE.Mesh(new THREE.ShapeGeometry(rShape), liningMat); rFlap.position.z = .03; envGroup.add(rFlap);
 
-// Top flap
+// Top flap (pivot at top edge)
 const tShape = new THREE.Shape();
-tShape.moveTo(-1.4, .9);
-tShape.lineTo(1.4, .9);
-tShape.lineTo(0, 0.0);
-tShape.closePath();
-const topFlapGeo = new THREE.ShapeGeometry(tShape);
+tShape.moveTo(-1.4, .9); tShape.lineTo(1.4, .9); tShape.lineTo(0, 0); tShape.closePath();
 const topFlapPivot = new THREE.Group();
-topFlapPivot.position.set(0, .9, .029);
+topFlapPivot.position.set(0, .9, .03);
+topFlapPivot.rotation.x = -0.01;
 envGroup.add(topFlapPivot);
-const topFlapMesh = new THREE.Mesh(topFlapGeo, flapMat);
+const topFlapMesh = new THREE.Mesh(new THREE.ShapeGeometry(tShape), flapMat);
 topFlapMesh.position.set(0, -.9, 0);
 topFlapPivot.add(topFlapMesh);
 
+
+
 // Wax seal
 const sealGeo = new THREE.CircleGeometry(.22, 32);
-const seal = new THREE.Mesh(sealGeo, sealMat); seal.position.set(0, 0.05, .03); envGroup.add(seal);
-const innerSeal = new THREE.CircleGeometry(.16, 32);
-const iSeal = new THREE.Mesh(innerSeal, new THREE.MeshStandardMaterial({ color: 0xb8862a, roughness: .15, metalness: .7 }));
-iSeal.position.set(0, .05, .032); envGroup.add(iSeal);
+const seal = new THREE.Mesh(sealGeo, sealMat);
+seal.position.set(0, 0.05, .08);
+seal.userData.noOutline = true;
+envGroup.add(seal);
 
-// Edge lines (border)
-const edgeGeo = new THREE.EdgesGeometry(bodyGeo);
-const edgeMat = new THREE.LineBasicMaterial({ color: 0xd4a47a, transparent: true, opacity: .4 });
-const edges = new THREE.LineSegments(edgeGeo, edgeMat); envGroup.add(edges);
+const iSeal = new THREE.Mesh(new THREE.CircleGeometry(.16, 32), new THREE.MeshStandardMaterial({ color: 0xb08060, roughness: .15, metalness: .7, transparent: true }));
+iSeal.position.set(0, .05, .085);
+iSeal.userData.noOutline = true;
+envGroup.add(iSeal);
 
-// Mouse interaction
+// Edge lines
+const edgeMat = new THREE.LineBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.2 });
+envGroup.traverse((child) => {
+  if (child.isMesh && !child.userData.noOutline) {
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(child.geometry), edgeMat);
+    child.add(edges);
+  }
+});
+
+// ===== MOUSE / TOUCH INTERACTION =====
 let isDragging = false, lastMouse = { x: 0, y: 0 }, targetRot = { x: 0, y: 0 }, currentRot = { x: 0, y: 0 };
 let opened = false, animating = false;
 
 container.addEventListener('mousedown', e => { isDragging = true; lastMouse = { x: e.clientX, y: e.clientY } });
 document.addEventListener('mousemove', e => {
   if (!isDragging || opened) return;
-  const dx = (e.clientX - lastMouse.x) * .01;
-  const dy = (e.clientY - lastMouse.y) * .01;
-  targetRot.y += dx; targetRot.x += dy;
+  targetRot.y += (e.clientX - lastMouse.x) * .01;
+  targetRot.x += (e.clientY - lastMouse.y) * .01;
   lastMouse = { x: e.clientX, y: e.clientY };
 });
 document.addEventListener('mouseup', () => isDragging = false);
-
 container.addEventListener('touchstart', e => { lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY }; isDragging = true }, { passive: true });
 document.addEventListener('touchmove', e => {
   if (!isDragging || opened) return;
-  const dx = (e.touches[0].clientX - lastMouse.x) * .01;
-  const dy = (e.touches[0].clientY - lastMouse.y) * .01;
-  targetRot.y += dx; targetRot.x += dy;
+  targetRot.y += (e.touches[0].clientX - lastMouse.x) * .01;
+  targetRot.x += (e.touches[0].clientY - lastMouse.y) * .01;
   lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
 }, { passive: true });
 document.addEventListener('touchend', () => isDragging = false);
@@ -136,67 +128,116 @@ container.addEventListener('click', e => {
   if (dist < 5 && !opened && !animating) openEnvelope();
 });
 container.addEventListener('touchend', e => {
-  if (!animating && !opened && isDragging === false) {
-    const touch = e.changedTouches[0];
-    const dist = Math.hypot(touch.clientX - clickStart.x, touch.clientY - clickStart.y);
-    if (dist < 10) openEnvelope();
-  }
+  const touch = e.changedTouches[0];
+  const dist = Math.hypot(touch.clientX - clickStart.x, touch.clientY - clickStart.y);
+  if (dist < 10 && !opened && !animating) openEnvelope();
 });
 
-let openProgress = 0;
+// ===== ANIMATION STATE =====
+let phase = 'idle'; // idle | snapping | opening | card | done
+let phaseProgress = 0;
+let floatTime = 0;
+
+function easeInOut(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+function lerp(a, b, t) { return a + (b - a) * t; }
+function lerpAngle(a, b, t) { return a + (b - a) * t; }
+
 function openEnvelope() {
-  opened = true; animating = true;
-  // First snap back to default orientation
+  opened = true; animating = true; phase = 'snapping';
   targetRot.x = 0; targetRot.y = 0;
+  // Hide hint immediately
+  const hint = document.getElementById('envelope-hint');
+  if (hint) hint.classList.add('hidden');
 }
 
-function lerpAngle(a, b, t) { return a + (b - a) * t; }
-let flapAngle = 0;
-let transitionDelay = 0;
-
+// ===== MAIN RENDER LOOP =====
 function animate() {
   requestAnimationFrame(animate);
+
+  // Animate lighting in a horizontal arc (left and right around the front)
+  const time = Date.now() * 0.002;
+  const angle = Math.sin(time * 0.5) * 1; // Swings back and forth smoothly
+  dirLight.position.x = Math.sin(angle) * 6;
+  dirLight.position.y = -3; // Fixed height, no up/down motion
+  dirLight.position.z = Math.cos(angle) * 4; // Arcs around the Z axis
+
   // Smooth rotation
   currentRot.x = lerpAngle(currentRot.x, targetRot.x, .08);
   currentRot.y = lerpAngle(currentRot.y, targetRot.y, .08);
   envGroup.rotation.x = currentRot.x;
   envGroup.rotation.y = currentRot.y;
 
-  // Envelope opening animation
-  if (opened) {
-    const snapDone = Math.abs(currentRot.x) < 0.01 && Math.abs(currentRot.y) < 0.01;
+  if (phase === 'idle') {
+    // Gentle float
+    floatTime += 0.016;
+    envGroup.position.y = Math.sin(floatTime * 1.0) * 0.08;
+
+  } else if (phase === 'snapping') {
+    // Wait for rotation to snap back to center
+    const snapDone = Math.abs(currentRot.x) < 0.015 && Math.abs(currentRot.y) < 0.015;
     if (snapDone) {
-      openProgress = Math.min(openProgress + .018, 1);
-      flapAngle = openProgress * Math.PI * .95;
-      topFlapPivot.rotation.x = -flapAngle;
-      // Scale up and fly away
-      if (openProgress > 0.8) {
-        const t = (openProgress - .8) / .2;
-        envGroup.scale.setScalar(1 + t * 0.3);
-        envGroup.position.y = t * 1.5;
-        renderer.domElement.style.opacity = 1 - t;
-      }
-      if (openProgress >= 1) {
-        animating = false;
-        transitionToSite();
+      phase = 'opening';
+      phaseProgress = 0;
+    }
+
+  } else if (phase === 'opening') {
+    // Phase 1: Fade out seal + open top flap + card slides up
+    phaseProgress = Math.min(phaseProgress + 0.012, 1);
+    const ep = easeInOut(phaseProgress);
+
+    // 1a — seal fades out in first 30%
+    const sealFade = Math.max(0, 1 - phaseProgress / 0.3);
+    sealMat.opacity = sealFade;
+    iSeal.material.opacity = sealFade;
+
+    // 1b — flap opens
+    const flapTarget = -Math.PI * 0.95;
+    topFlapPivot.rotation.x = lerp(-0.01, flapTarget, easeInOut(Math.min(phaseProgress / 0.8, 1)));
+
+    // 1c — at 60%, start fading envelope wrapper down
+    if (phaseProgress > 0.6) {
+      const wrapper = document.getElementById('envelope-wrapper');
+      if (wrapper && !wrapper.classList.contains('opening')) {
+        wrapper.classList.add('opening');
       }
     }
+
+    if (phaseProgress >= 1) {
+      phase = 'done';
+      transitionToSite();
+    }
   }
-  // Float animation (only when not opened)
-  if (!opened) {
-    envGroup.position.y = Math.sin(Date.now() * .001) * .08;
-  }
+
   renderer.render(scene, camera);
 }
 animate();
 
+// ===== ENTRANCE ANIMATION =====
+// Force top of page on every load (prevents scroll carry-over)
+window.scrollTo(0, 0);
+history.scrollRestoration = 'manual';
+
+window.addEventListener('load', () => {
+  window.scrollTo(0, 0);
+  setTimeout(() => {
+    const wrapper = document.getElementById('envelope-wrapper');
+    if (wrapper) wrapper.classList.add('entered');
+    currentRot = { x: Math.PI * 0.5, y: Math.PI * 2 };
+  }, 300);
+});
+
+// ===== TRANSITION TO SITE =====
 function transitionToSite() {
   const envScreen = document.getElementById('envelope-screen');
-  envScreen.classList.add('exit');
   setTimeout(() => {
-    envScreen.style.display = 'none';
-    document.getElementById('main-site').classList.add('visible');
-    setupScrollReveal();
+    envScreen.classList.add('exit');
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      envScreen.style.display = 'none';
+      document.getElementById('main-site').classList.add('visible');
+      setupScrollReveal();
+      setTimeout(adjustTimelineLine, 50);
+    }, 1400);
   }, 1200);
 }
 
@@ -209,7 +250,6 @@ function setupScrollReveal() {
     });
   }, { threshold: .12 });
   els.forEach(el => observer.observe(el));
-  // Trigger visible ones immediately
   setTimeout(() => {
     els.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -218,25 +258,21 @@ function setupScrollReveal() {
   }, 100);
 }
 
-// ===== ATTENDANCE SELECTION =====
-let attendYes = true;
-function selectAttend(val) {
-  attendYes = val === 'yes';
-  document.getElementById('att-yes').classList.toggle('selected', attendYes);
-  document.getElementById('att-no').classList.toggle('selected', !attendYes);
+// ===== TIMELINE LINE ADJUSTMENT =====
+function adjustTimelineLine() {
+  const timeline = document.querySelector('.timeline');
+  if (!timeline) return;
+  const dots = timeline.querySelectorAll('.timeline-dot');
+  if (dots.length < 2) return;
+  const firstDot = dots[0];
+  const lastDot = dots[dots.length - 1];
+  const timelineRect = timeline.getBoundingClientRect();
+  const firstDotRect = firstDot.getBoundingClientRect();
+  const lastDotRect = lastDot.getBoundingClientRect();
+  const topOffset = firstDotRect.top - timelineRect.top + (firstDotRect.height / 2);
+  const bottomOffset = lastDotRect.top - timelineRect.top + (lastDotRect.height / 2);
+  timeline.style.setProperty('--line-top', `${topOffset}px`);
+  timeline.style.setProperty('--line-height', `${bottomOffset - topOffset}px`);
 }
 
-// ===== RSVP SUBMIT =====
-function submitRSVP() {
-  const name = document.getElementById('guest-name').value.trim();
-  const email = document.getElementById('guest-email').value.trim();
-  if (!name) { document.getElementById('guest-name').focus(); document.getElementById('guest-name').style.borderBottomColor = '#c86060'; return; }
-  document.getElementById('rsvp-form-inner').style.display = 'none';
-  const success = document.getElementById('form-success');
-  success.classList.add('show');
-  if (attendYes) {
-    document.getElementById('success-message').textContent = `We're so happy to celebrate with you, ${name}! See you on the 14th.`;
-  } else {
-    document.getElementById('success-message').textContent = `We'll miss you, ${name}. Thank you for letting us know.`;
-  }
-}
+window.addEventListener('resize', adjustTimelineLine);

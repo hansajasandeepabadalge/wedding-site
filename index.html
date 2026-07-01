@@ -3,10 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gimhani & Vimal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Gimhani & Kimal</title>
+  <link rel="icon" href="favicon.ico?v=2">
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Raleway:wght@200;300;400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Raleway:wght@200;300;400&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -17,11 +20,13 @@
   <canvas id="particles-bg"></canvas>
 
   <!-- Envelope Screen -->
-  <div id="envelope-screen">
-    <div id="canvas-container">
-      <canvas id="three-canvas"></canvas>
+  <div id="envelope-screen" class="entering">
+    <div id="envelope-wrapper">
+      <div id="canvas-container">
+        <canvas id="three-canvas"></canvas>
+      </div>
+      <div class="envelope-hint" id="envelope-hint">Click to open</div>
     </div>
-    <div class="envelope-hint">Click to open</div>
   </div>
 
   <!-- Main Site -->
@@ -29,94 +34,36 @@
 
     <!-- HERO -->
     <section class="hero">
-      <!-- Floral corners SVG -->
-      <svg class="hero-floral-tl" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g opacity="0.8">
-          <circle cx="30" cy="30" r="8" fill="#e8a0b0" opacity=".7" />
-          <circle cx="50" cy="20" r="5" fill="#f0c4d0" opacity=".6" />
-          <circle cx="15" cy="50" r="6" fill="#d4b0c8" opacity=".6" />
-          <circle cx="70" cy="35" r="4" fill="#e8c0d0" opacity=".5" />
-          <circle cx="40" cy="65" r="5" fill="#f0b4c4" opacity=".6" />
-          <ellipse cx="25" cy="80" rx="12" ry="6" fill="#e0a0b8" opacity=".4" transform="rotate(-30 25 80)" />
-          <ellipse cx="80" cy="25" rx="10" ry="5" fill="#d8c0d8" opacity=".4" transform="rotate(20 80 25)" />
-          <path d="M10 10 Q40 5 60 30 Q80 55 60 80 Q40 105 10 100" stroke="#c8a0b8" stroke-width="1" fill="none"
-            opacity=".3" />
-          <path d="M5 40 Q20 20 45 30 Q70 40 75 65" stroke="#d4b0a0" stroke-width=".8" fill="none" opacity=".3" />
-          <circle cx="60" cy="80" r="7" fill="#f4c8d8" opacity=".6" />
-          <circle cx="85" cy="60" r="5" fill="#e0b8c8" opacity=".5" />
-          <circle cx="100" cy="40" r="4" fill="#f0c0d0" opacity=".4" />
-          <ellipse cx="50" cy="100" rx="14" ry="7" fill="#e8b0c0" opacity=".35" transform="rotate(-15 50 100)" />
-          <path d="M20 120 Q35 90 70 95 Q105 100 110 70" stroke="#c8a0b0" stroke-width="1" fill="none" opacity=".25" />
-          <circle cx="95" cy="90" r="6" fill="#f4b8c8" opacity=".45" />
-          <circle cx="120" cy="55" r="4" fill="#d8c0d0" opacity=".4" />
-          <ellipse cx="105" cy="110" rx="10" ry="5" fill="#e0a8b8" opacity=".35" transform="rotate(10 105 110)" />
-          <circle cx="35" cy="130" r="5" fill="#f0b0c4" opacity=".5" />
-          <circle cx="70" cy="125" r="4" fill="#e8c4d4" opacity=".4" />
-          <path d="M5 130 Q40 115 75 130 Q110 145 120 120" stroke="#c8b0c0" stroke-width=".8" fill="none"
-            opacity=".2" />
-        </g>
-      </svg>
-      <svg class="hero-floral-tr" viewBox="0 0 200 200" fill="none">
-        <g opacity="0.8">
-          <circle cx="30" cy="30" r="8" fill="#e8a0b0" opacity=".7" />
-          <circle cx="50" cy="20" r="5" fill="#f0c4d0" opacity=".6" />
-          <circle cx="15" cy="50" r="6" fill="#d4b0c8" opacity=".6" />
-          <circle cx="70" cy="35" r="4" fill="#e8c0d0" opacity=".5" />
-          <circle cx="40" cy="65" r="5" fill="#f0b4c4" opacity=".6" />
-          <ellipse cx="25" cy="80" rx="12" ry="6" fill="#e0a0b8" opacity=".4" transform="rotate(-30 25 80)" />
-          <ellipse cx="80" cy="25" rx="10" ry="5" fill="#d8c0d8" opacity=".4" transform="rotate(20 80 25)" />
-          <circle cx="60" cy="80" r="7" fill="#f4c8d8" opacity=".6" />
-          <circle cx="85" cy="60" r="5" fill="#e0b8c8" opacity=".5" />
-          <circle cx="100" cy="40" r="4" fill="#f0c0d0" opacity=".4" />
-          <ellipse cx="50" cy="100" rx="14" ry="7" fill="#e8b0c0" opacity=".35" transform="rotate(-15 50 100)" />
-          <circle cx="95" cy="90" r="6" fill="#f4b8c8" opacity=".45" />
-          <circle cx="35" cy="130" r="5" fill="#f0b0c4" opacity=".5" />
-        </g>
-      </svg>
-      <svg class="hero-floral-bl" viewBox="0 0 200 200" fill="none">
-        <g opacity="0.8">
-          <circle cx="30" cy="30" r="8" fill="#e8a0b0" opacity=".7" />
-          <circle cx="50" cy="20" r="5" fill="#f0c4d0" opacity=".6" />
-          <circle cx="15" cy="50" r="6" fill="#d4b0c8" opacity=".6" />
-          <circle cx="70" cy="35" r="4" fill="#e8c0d0" opacity=".5" />
-          <circle cx="40" cy="65" r="5" fill="#f0b4c4" opacity=".6" />
-          <circle cx="60" cy="80" r="7" fill="#f4c8d8" opacity=".6" />
-          <circle cx="85" cy="60" r="5" fill="#e0b8c8" opacity=".5" />
-          <circle cx="35" cy="130" r="5" fill="#f0b0c4" opacity=".5" />
-          <ellipse cx="50" cy="100" rx="14" ry="7" fill="#e8b0c0" opacity=".35" transform="rotate(-15 50 100)" />
-        </g>
-      </svg>
-      <svg class="hero-floral-br" viewBox="0 0 200 200" fill="none">
-        <g opacity="0.8">
-          <circle cx="30" cy="30" r="8" fill="#e8a0b0" opacity=".7" />
-          <circle cx="50" cy="20" r="5" fill="#f0c4d0" opacity=".6" />
-          <circle cx="15" cy="50" r="6" fill="#d4b0c8" opacity=".6" />
-          <circle cx="70" cy="35" r="4" fill="#e8c0d0" opacity=".5" />
-          <circle cx="40" cy="65" r="5" fill="#f0b4c4" opacity=".6" />
-          <circle cx="60" cy="80" r="7" fill="#f4c8d8" opacity=".6" />
-          <circle cx="85" cy="60" r="5" fill="#e0b8c8" opacity=".5" />
-        </g>
-      </svg>
+      <!-- Floral corners -->
+      <img src="assets/corner_deco_01.png" alt="" class="hero-floral-tl">
+      <img src="assets/corner_deco_01.png" alt="" class="hero-floral-br">
 
       <div class="hero-content">
         <div class="hero-save-the-date">Save the Date</div>
-        <h1 class="hero-names">
-          Gimhani<span class="hero-ampersand">&</span>Kimal
-        </h1>
+        <div class="name-glare-wrapper hero-names-img">
+          <img src="assets/names.png" alt="Gimhani & Kimal">
+        </div>
         <div class="hero-divider">
           <div class="hero-divider-line"></div>
           <div class="hero-divider-diamond"></div>
           <div class="hero-divider-line r"></div>
         </div>
-        <div class="hero-date">Saturday · 14 February 2026</div>
-        <div class="hero-venue">Cinnamon Grand · Colombo, Sri Lanka</div>
-        <button class="scroll-btn" onclick="document.getElementById('rsvp').scrollIntoView({behavior:'smooth'})">RSVP
-          Now</button>
+        <div class="hero-date">Monday<br>03<sup>rd</sup> August 2026</div>
+        <div class="hero-venue">Empire Ballroom · Mount Lavinia Hotel</div>
+
+        <div class="scroll-down-container" onclick="window.scrollBy({top: window.innerHeight, behavior: 'smooth'})">
+          <div class="scroll-arrow">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c8a07a" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- WEDDING DETAILS -->
-    <section style="background:#fdf6f0;padding:80px 0">
+    <section class="theme-dark">
       <div class="section" style="padding-top:0;padding-bottom:0">
         <div class="section-label reveal">Wedding Details</div>
         <div class="section-title reveal">The Celebration</div>
@@ -130,8 +77,8 @@
               <circle cx="22" cy="28" r="3" fill="#e8b0a0" opacity=".7" />
             </svg>
             <div class="detail-card-title">Date</div>
-            <div class="detail-main">14 February, 2026</div>
-            <div class="detail-sub">Valentine's Day</div>
+            <div class="detail-main">03<sup>rd</sup> August, 2026</div>
+            <div class="detail-sub">A Day to Remember</div>
           </div>
           <div class="detail-card">
             <svg class="detail-icon" viewBox="0 0 44 44" fill="none">
@@ -141,8 +88,8 @@
               <circle cx="22" cy="22" r="2" fill="#c8a07a" />
             </svg>
             <div class="detail-card-title">Time</div>
-            <div class="detail-main">5:00 PM onwards</div>
-            <div class="detail-sub">Ceremony · Reception · Dinner</div>
+            <div class="detail-main">10:30 AM onwards</div>
+            <div class="detail-sub">Ceremony · Reception · Celebration</div>
           </div>
           <div class="detail-card">
             <svg class="detail-icon" viewBox="0 0 44 44" fill="none">
@@ -151,19 +98,10 @@
               <circle cx="22" cy="16" r="3" fill="#e8b0a0" opacity=".8" />
             </svg>
             <div class="detail-card-title">Venue</div>
-            <div class="detail-main">Cinnamon Grand</div>
-            <div class="detail-sub">Colombo, Sri Lanka</div>
+            <div class="detail-main">Mount Lavinia Hotel</div>
+            <div class="detail-sub">Empire Ballroom</div>
           </div>
-          <div class="detail-card">
-            <svg class="detail-icon" viewBox="0 0 44 44" fill="none">
-              <path d="M10 14 L22 8 L34 14 L34 36 L10 36 Z" stroke="#c8a07a" stroke-width="1" fill="none" />
-              <path d="M16 36 L16 26 L22 22 L28 26 L28 36" stroke="#c8a07a" stroke-width="1" fill="none" />
-              <line x1="10" y1="14" x2="34" y2="14" stroke="#e8b0a0" stroke-width=".8" opacity=".5" />
-            </svg>
-            <div class="detail-card-title">Dress Code</div>
-            <div class="detail-main">Formal Elegance</div>
-            <div class="detail-sub">Pastels & earth tones preferred</div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -186,73 +124,77 @@
       </div>
     </section>
 
+    <!-- TIMELINE -->
+    <section class="timeline-section theme-dark">
+      <div style="max-width:800px;margin:0 auto;padding:0 2rem;">
+        <div class="section-label reveal">The Schedule</div>
+        <div class="section-title reveal">Wedding Agenda</div>
+
+        <div class="timeline reveal">
+          <div class="timeline-item left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">9:15 AM</div>
+              <div class="timeline-title">Registration</div>
+              <div class="timeline-desc">Guest arrival and check-in begins.</div>
+            </div>
+          </div>
+          <div class="timeline-item right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">9:40 AM</div>
+              <div class="timeline-title">Poruwa Ceremony</div>
+              <div class="timeline-desc">Traditional Poruwa ceremony commences.</div>
+            </div>
+          </div>
+          <div class="timeline-item left">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">10:30 AM</div>
+              <div class="timeline-title">Wedding Ceremony</div>
+              <div class="timeline-desc">Wedding celebration begins in the main venue.</div>
+            </div>
+          </div>
+          <div class="timeline-item right">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-time">3:30 PM</div>
+              <div class="timeline-title">End of Celebrations</div>
+              <div class="timeline-desc">Guests depart and the event comes to a close.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- RSVP -->
     <section id="rsvp" class="rsvp-section">
       <div class="rsvp-inner">
         <div class="section-label reveal">Kindly Reply</div>
         <div class="section-title reveal">RSVP</div>
         <p class="reveal"
-          style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:#aa7a6a;text-align:center;margin-bottom:.5rem">
-          Please respond by 31 January 2026</p>
+          style="font-family:'Bodoni Moda',serif;font-size:16px;color:#aa7a6a;text-align:center;margin-bottom:.5rem">
+          Please respond before 10 July 2026
+        </p>
 
-        <div class="rsvp-form reveal">
-          <div id="rsvp-form-inner">
-            <div class="form-row">
-              <div class="form-group">
-                <label>Your Full Name</label>
-                <input type="text" id="guest-name" placeholder="Enter your name">
-              </div>
-              <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="guest-email" placeholder="your@email.com">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom:1.5rem">
-              <label>Will you be joining us?</label>
-              <div class="attendance-group">
-                <div class="attend-option selected" id="att-yes" onclick="selectAttend('yes')">Joyfully Accepts</div>
-                <div class="attend-option" id="att-no" onclick="selectAttend('no')">Regretfully Declines</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>Number of Guests</label>
-                <select id="guest-count">
-                  <option value="1">1 person</option>
-                  <option value="2">2 people</option>
-                  <option value="3">3 people</option>
-                  <option value="4">4 people</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Meal Preference</label>
-                <select id="meal-pref">
-                  <option value="standard">Standard</option>
-                  <option value="vegetarian">Vegetarian</option>
-                  <option value="vegan">Vegan</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group full" style="margin-bottom:0">
-              <label>A Note for the Couple (optional)</label>
-              <textarea id="guest-note" placeholder="Share your wishes..."></textarea>
-            </div>
-            <button class="submit-btn" onclick="submitRSVP()">Confirm Your Attendance</button>
-          </div>
-          <div class="form-success" id="form-success">
-            <div class="success-icon">✿</div>
-            <div class="success-title">Thank you!</div>
-            <p class="success-msg" id="success-message">We can't wait to celebrate with you.</p>
-          </div>
+        <div class="rsvp-form reveal"
+          style="display: flex; justify-content: center; background: transparent; box-shadow: none; padding: 0;">
+          <iframe
+            src="https://docs.google.com/forms/d/e/1FAIpQLSeP92WUaAlF4XGTOR9d61Di87ND1yElYGJ5IHvYHejOeMtCkQ/viewform?embedded=true&hl=en"
+            width="100%" height="950" frameborder="0" marginheight="0" marginwidth="0" scrolling="no"
+            style="overflow: hidden;">Loading…</iframe>
         </div>
       </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-      <div class="footer-names">Gimhani & Vimal</div>
-      <div class="footer-text" style="margin-bottom:1rem">14 · 02 · 2026 · Colombo</div>
-      <div class="footer-text" style="font-size:9px;opacity:.35;letter-spacing:2px">Made with love ♡</div>
+      <div style="font-family:'Great Vibes', cursive; font-size: 60px; color: #7a3d4a; margin-bottom: 1rem;">
+        Thank You
+      </div>
+      <div class="footer-text" style="font-family:'Bodoni Moda', serif; font-size:14px; margin-bottom:0.5rem">03 · 08 ·
+        2026</div>
+      <div class="footer-text" style="font-size:10px;opacity:.5;letter-spacing:3px;text-transform:uppercase;">Your presence will make this special day truly unforgettable.</div>
     </footer>
 
   </div>
